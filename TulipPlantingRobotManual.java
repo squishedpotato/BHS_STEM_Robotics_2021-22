@@ -45,7 +45,7 @@ public class TulipPlantingRobotManual extends LinearOpMode {
   public void runOpMode() {
     
     //initializes motors
-    motorInitialization(false);
+    motorInitialization(2);
     
     waitForStart();
     //Initial Run time setup: runs only once
@@ -70,14 +70,14 @@ public class TulipPlantingRobotManual extends LinearOpMode {
   //Will maybe generalize code later
   //false = two motor scheme
   //true = four motor scheme
-  private void motorInitialization(boolean motorScheme){
-    if(motorScheme){
+  private void motorInitialization(int motorScheme){
+    if(motorScheme == 4){
       frontleft = hardwareMap.get(DcMotor.class, "frontleft");
       frontright = hardwareMap.get(DcMotor.class, "frontright");
       backleft = hardwareMap.get(DcMotor.class, "backleft");
       backright = hardwareMap.get(DcMotor.class, "backright");
     }
-    else{
+    else if(motorScheme == 2){
       //Assignment for two motor setups (hopefully it doesn't break)
       frontleft = hardwareMap.get(DcMotor.class,"leftMotor");
       backleft = frontleft;
