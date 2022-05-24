@@ -161,7 +161,7 @@ public class TulipPlantingRobotManual extends LinearOpMode {
   }
   
   
-  //There be dragons here
+  //Here be dragons
   //Very questionable code coming up
   private double calcFRBLPower(double angle) {
       //easierDouble keeps code more readable: turns 1/4 pi into units of 1
