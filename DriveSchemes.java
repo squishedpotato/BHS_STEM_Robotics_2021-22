@@ -4,13 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class DriveSchemes {
-    /* Error Codes:
-    1: calcFRBLPower Method error
-    2: calcFLBRPower Method error
-    */
+    //Generic drive scheme class that holds several methods of different driving schemes with two or four motors
 
 
     //stuff I used for mecanum wheel stuff that really should have been local variables, but I'm too lazy to change it
+    //NOTE: THIS IS BAD CODING PRACTICE: DON'T INITIALIZE INSTANCE VARIABLES OUTSIDE OF THE CONSTRUCTOR
     private double leftStickAngle = 0;
     private double leftStickX = 0;
     double leftStickY = 0;
@@ -24,7 +22,10 @@ public class DriveSchemes {
     int ringMotorEncoder = 0;
     boolean debugBoolean = false;
     int error = 0;
-
+    /* Error Codes:
+    1: calcFRBLPower Method error
+    2: calcFLBRPower Method error
+    */
 
 
 
