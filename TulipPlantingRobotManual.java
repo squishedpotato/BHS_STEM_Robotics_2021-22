@@ -24,6 +24,7 @@ public class TulipPlantingRobotManual extends LinearOpMode {
     private DcMotor backleft;
     private DcMotor backright;
     private DcMotor pulley;
+    private DcMotor oscillator;
     private Servo soilRelease;
     private TelemetryDataHelper tellyHelper;
     private DriveSchemes driveHelper;
@@ -36,6 +37,7 @@ public class TulipPlantingRobotManual extends LinearOpMode {
         //initializes motors
         motorInitialization(4,true);
         soilRelease = hardwareMap.get(Servo.class,"soilRelease");
+        oscillator = hardwareMap.get(DcMotor.class,"oscillator");
         pulley = hardwareMap.get(DcMotor.class,"pulley");
         
         tellyHelper = new TelemetryDataHelper(telemetry, gamepad1, gamepad2);
@@ -51,7 +53,7 @@ public class TulipPlantingRobotManual extends LinearOpMode {
             // Note: DO NOT PRESS MODE BUTTON ON THE CONTROLLER (CHANGES CONTROLS TO IDK WHAT)
 
             //Y axis on joysticks is reversed: negative is on top, positive is on bottom (don't ask why)
-            driveHelper.tankControls(frontleft, backleft,frontright, backright, gamepad1.left_stick_y, gamepad1.right_stick_y);
+            driveHelper.tankControls(frontleft, backleft,frontright, backright, -gamepad1.left_stick_y, -gamepad1.right_stick_y);
             dirtControl(gamepad1);
             pulleyControl(gamepad1);
             
@@ -72,6 +74,9 @@ public class TulipPlantingRobotManual extends LinearOpMode {
     }
     private void pulleyControl(Gamepad gp){
         pulley.setPower(gp.right_trigger - gp.left_trigger);
+    }
+    private void oscillatorControl(Gamepad gp){
+        if(gp.x) oscillator.setPower(1);
     }
     //Assumes there's only two motor schemes: two motor for four wheels / four motors for four wheels
     //Will maybe generalize code later
