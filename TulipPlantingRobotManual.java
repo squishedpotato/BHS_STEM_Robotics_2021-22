@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
@@ -23,6 +23,8 @@ public class TulipPlantingRobotManual extends LinearOpMode {
     private DcMotor frontright;
     private DcMotor backleft;
     private DcMotor backright;
+    private DcMotor pulley;
+    private Servo soilRelease;
     private TelemetryDataHelper tellyHelper;
     private DriveSchemes driveHelper;
     /**
@@ -33,7 +35,11 @@ public class TulipPlantingRobotManual extends LinearOpMode {
 
         //initializes motors
         motorInitialization(4,true);
+        soilRelease = hardwareMap.get(Servo.class,"soilRelease");
+        pulley = hardwareMap.get(DcMotor.class,"pulley");
+        
         tellyHelper = new TelemetryDataHelper(telemetry, gamepad1, gamepad2);
+        driveHelper = new DriveSchemes();
         waitForStart();
         //Initial Run time setup: runs only once
         if (opModeIsActive()) {
@@ -46,7 +52,9 @@ public class TulipPlantingRobotManual extends LinearOpMode {
 
             //Y axis on joysticks is reversed: negative is on top, positive is on bottom (don't ask why)
             driveHelper.tankControls(frontleft, backleft,frontright, backright, gamepad1.left_stick_y, gamepad1.right_stick_y);
-
+            dirtControl(gamepad1);
+            pulleyControl(gamepad1);
+            
             tellyHelper.telemetryDisplayControllerG1();
             tellyHelper.telemetryDisplayControllerG2();
             tellyHelper.telemetryDisplayDriveMotors(frontleft,backleft,frontright,backright);
@@ -54,6 +62,17 @@ public class TulipPlantingRobotManual extends LinearOpMode {
         }
     }
 
+    private void dirtControl(Gamepad gp){
+        if(gp.a){
+            soilRelease.setPosition(1);
+        }
+        if(gp.b){
+            soilRelease.setPosition(-1);
+        }
+    }
+    private void pulleyControl(Gamepad gp){
+        pulley.setPower(gp.right_trigger - gp.left_trigger);
+    }
     //Assumes there's only two motor schemes: two motor for four wheels / four motors for four wheels
     //Will maybe generalize code later
     //false = two motor scheme
