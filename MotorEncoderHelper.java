@@ -19,7 +19,7 @@ public class MotorEncoderHelper{
     motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     motor.setTargetPosition((int)(numRotations * encoderTicks));
     motor.setPower(power);
-    while(motor.isBusy() && isOneMotor){
+    while(motor.isBusy() && isOneMotor){ //bad code, gonna remove and replace with method waitUntilMotorStops()
     
     }
     motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -33,5 +33,22 @@ public class MotorEncoderHelper{
     for(int i = 0; i < motorList.length, i++){
       this.runToPosition(motorList[i], tickCountList[i], numRotations, power, false);
     }
+  }
+  public void runAllToPosition(double radiusOfwheel, double distance, double power){
+    for(int i = 0; i < motorList.length, i++){
+      this.runToPosition(motorList[i], tickCountList[i], radiusOfWheel, distance, power, false);
+    }
+  }
+  public DcMotor[] getMotorList(){
+    return motorList;
+  }
+  public void setMotorList(DcMotor[] motorList){
+    this.motorList = motorList;
+  }
+  public int[] getTickCountList(){
+    return tickCountList;
+  }
+  public void setTickCountList(int[] tickCountList){
+    this.tickCountList = tickCountList;
   }
 }
