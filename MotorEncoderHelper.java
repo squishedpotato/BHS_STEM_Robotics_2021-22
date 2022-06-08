@@ -12,17 +12,16 @@ public class MotorEncoderHelper{
     this.tickCountList = tickCountList;
   }
   public MotorEncoderHelper(){
-    this(new motorList[1], new tickCountList[1]);
+    this(new DcMotor[1], new int[1]);
   }
   public void runToPosition(DcMotor motor, int encoderTicks, double numRotations, double power, boolean isOneMotor){
     motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);  
-    motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     motor.setTargetPosition((int)(numRotations * encoderTicks));
     motor.setPower(power);
     while(motor.isBusy() && isOneMotor){ //bad code, gonna remove and replace with method waitUntilMotorStops()
     
     }
-    motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
   }
   public void runToPosition(DcMotor motor, int encoderTicks, double radiusOfWheel, double distance, double power, boolean isOneMotor){
     double circumferenceOfWheel = 2 * Math.PI * radiusOfWheel;
@@ -30,12 +29,12 @@ public class MotorEncoderHelper{
     this.runToPosition(motor, encoderTicks, numRotations, power, isOneMotor);
   }
   public void runAllToPosition(double numRotations, double power){
-    for(int i = 0; i < motorList.length, i++){
+    for(int i = 0; i < motorList.length; i++){
       this.runToPosition(motorList[i], tickCountList[i], numRotations, power, false);
     }
   }
   public void runAllToPosition(double radiusOfwheel, double distance, double power){
-    for(int i = 0; i < motorList.length, i++){
+    for(int i = 0; i < motorList.length; i++){
       this.runToPosition(motorList[i], tickCountList[i], radiusOfWheel, distance, power, false);
     }
   }
