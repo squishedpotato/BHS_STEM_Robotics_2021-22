@@ -8,7 +8,8 @@ public class DriveSchemes {
 
 
     //stuff I used for mecanum wheel stuff that really should have been local variables, but I'm too lazy to change it
-    //NOTE: THIS IS BAD CODING PRACTICE: DON'T INITIALIZE INSTANCE VARIABLES OUTSIDE OF THE CONSTRUCTOR
+    //NOTE (to any future STEM robotics members): As a rule of thumb, only initialize variables inside the constructor if you intend to change it through the constructor. 
+    //      In this code, these values are hardcoded since I want these values to remain the same
     private double leftStickAngle = 0;
     private double leftStickX = 0;
     double leftStickY = 0;
